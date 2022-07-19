@@ -11,7 +11,7 @@ class Utilities:
 		for line in fin:
 			outstr = line
 			for key in toreplace:
-				outstr = line.replace(key, toreplace.get(key))
+				outstr = outstr.replace(key, toreplace.get(key))
 			fout.write(outstr)
 		#close input and output files
 		fin.close()
