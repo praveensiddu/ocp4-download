@@ -30,6 +30,6 @@ sudo pip3 install python-dotenv
 
 3. download oc-mirror
 ``` 
-python oc-mirror-download.py
+python oc-mirror-download.py --ocpversion 4.10.10
 ```
 
