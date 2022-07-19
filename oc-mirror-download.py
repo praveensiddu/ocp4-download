@@ -13,7 +13,7 @@ print('Downloading OCP version=', args.ocpversion)
 if os.path.isfile('oc-mirror.tar.gz'):
     os.remove('oc-mirror.tar.gz')
 
-result = subprocess.run(['wget', f'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-{args.ocpversion}/oc-mirror.tar.gz'], stdout=subprocess.PIPE)
+result = subprocess.run(['wget', f'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-{args.ocpversion}/oc-mirror.tar.gz'], stdout=subprocess.PIPE)
 
 result = subprocess.run(['tar', 'xvzf', 'oc-mirror.tar.gz'], stdout=subprocess.PIPE)
 home = str(Path.home())
