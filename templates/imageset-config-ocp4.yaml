@@ -5,8 +5,8 @@ archiveSize: 4
 mirror:
   platform:
     channels:
-    - name: stable-@@ocpchannel@@
-      minVersion: @@ocpversion@@
-      maxVersion: @@ocpversion@@
+    - name: stable-<ocpchannel>
+      minVersion: <ocpversion>
+      maxVersion: <ocpversion>
       shortestPath: true
     graph: true

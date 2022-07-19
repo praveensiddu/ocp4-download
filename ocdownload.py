@@ -20,15 +20,11 @@ args = parser.parse_args()
 
 channel = args.ocpversion.rsplit('.', 1)[0]
 
-parameter_values_dict = {"ocpchannel" :channel, "ocpversion" :args.ocpversion}
-input_text = "some text @@ocpchannel@@ some more text @@ocpversion@@ some extra text"
-output_text = re.sub(r"@@(\w+?)@@", lambda match: parameter_values_dict[match.group(1)], input_text)
-print(output_text)
-
+parameter_values_dict = {"<ocpchannel>" :channel, "<ocpversion>" :args.ocpversion}
 
 ocp4path = f'{WORKDIR}/download/ocp4'
 if not os.path.isdir(ocp4path):
     os.makedirs (ocp4path)
 
 Utilities.replaceInFile("templates/imageset-config-ocp4.yaml", f'{ocp4path}/imageset-config.yaml', parameter_values_dict)
-
+print(f'{ocp4path}/imageset-config.yaml')
