@@ -8,7 +8,7 @@ parser.add_argument('--ocpversion', type=str, required=True)
 args = parser.parse_args()
 
 
-channel = args.ocpversion.split('\n', 2)[0]
+channel = args.ocpversion.split('.', 2)[0]
 
 parameter_values_dict = {"ocpchannel" :channel, "ocpversion" :args.ocpversion}
 input_text = "some text @@ocpchannel@@ some more text @@ocpversion@@ some extra text"
