@@ -23,3 +23,4 @@ output_text = re.sub(r"@@(\w+?)@@", lambda match: parameter_values_dict[match.gr
 print(output_text)
 
 Utilities.replaceInFile("templates/imageset-config-ocp4.yaml", f'{WORKDIR}/imageset-config.yaml', parameter_values_dict)
+
