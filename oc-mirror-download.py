@@ -10,7 +10,6 @@ args = parser.parse_args()
 # Print "Hello" + the user input argument
 print('Downloading OCP version=', args.ocpversion)
 
-
 if os.path.isfile('oc-mirror.tar.gz'):
     os.remove('oc-mirror.tar.gz')
 
