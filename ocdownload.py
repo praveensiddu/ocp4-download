@@ -34,7 +34,7 @@ if not os.path.isdir(ocp4path):
 Utilities.replaceInFile("templates/imageset-config-ocp4.yaml", f'{ocp4path}/imageset-config.yaml', parameter_values_dict)
 print(f'{ocp4path}/imageset-config.yaml')
 print('running oc-mirror')
-data = run(['oc-mirror', '--dry-run', '--config=./imageset-config.yaml', args.registryurl],capture_output=True,shell=True)
+data = run(['oc-mirror', '--dry-run', '--config=./imageset-config.yaml', args.registryurl], capture_output=True, shell=True)
 print(data.stdout)
 print(data.stderr)
 
