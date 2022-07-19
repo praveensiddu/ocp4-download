@@ -1,28 +1,15 @@
 ---
-apiVersion: mirror.openshift.io/v1alpha1
+# this format works with oc-mirror 4.11 or higher
+# Schema for this file is here https://github.com/openshift/oc-mirror/blob/release-4.11/pkg/api/v1alpha1/config_types.go#L13
+apiVersion: mirror.openshift.io/v1alpha2
 kind: ImageSetConfiguration
 # Don't use storageConfig. Intent is to not cache locally. But upload the image directly to registry
-archiveSize: 4
+#archiveSize: 4
 mirror:
+  #ocp: ocp field was used in older version.
   platform:
     channels:
     - name: stable-<ocpchannel>
       minVersion: <ocpversion>
       maxVersion: <ocpversion>
-      shortestPath: true
-    graph: true # Include Cincinnati upgrade graph image in imageset
-
----
-apiVersion: mirror.openshift.io/v1alpha1
-kind: ImageSetConfiguration
-# Don't use storageConfig. Intent is to not cache locally. But upload the image directly to registry
-archiveSize: 4
-mirror:
-  #platform: platform field was used in nightly build.
-  ocp:
-    channels:
-    - name: stable-<ocpchannel>
-      versions:
-      - '<ocpversion>'
-      - '<ocpversion>'
     graph: true # Include Cincinnati upgrade graph image in imageset
