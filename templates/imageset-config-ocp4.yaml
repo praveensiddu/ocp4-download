@@ -1,6 +1,7 @@
 ---
-apiVersion: mirror.openshift.io/v1alpha2
+apiVersion: mirror.openshift.io/v1alpha1
 kind: ImageSetConfiguration
+# Don't use storageConfig. Intent is to not cache locally. But upload the image directly to registry
 archiveSize: 4
 mirror:
   platform:
@@ -9,4 +10,19 @@ mirror:
       minVersion: <ocpversion>
       maxVersion: <ocpversion>
       shortestPath: true
-    graph: true
+    graph: true # Include Cincinnati upgrade graph image in imageset
+
+---
+apiVersion: mirror.openshift.io/v1alpha1
+kind: ImageSetConfiguration
+# Don't use storageConfig. Intent is to not cache locally. But upload the image directly to registry
+archiveSize: 4
+mirror:
+  #platform: platform field was used in nightly build.
+  ocp:
+    channels:
+    - name: stable-<ocpchannel>
+      versions:
+      - '<ocpversion>'
+      - '<ocpversion>'
+    graph: true # Include Cincinnati upgrade graph image in imageset
