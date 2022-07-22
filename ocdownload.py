@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import shutil
 from subprocess import run
 import os
+from enum import Enum
 from pathlib import Path
 from common.utilities import Utilities
 
@@ -14,7 +15,16 @@ script_path = Path(os.path.realpath(__file__)).parent
 WORKDIR = os.getenv('WORKDIR', default=home)
 print("Current working directory: {0}".format(os.getcwd()))
 
+
+class Product(Enum):
+    ocp = 'ocp'
+    operator = 'operator'
+
+    def __str__(self):
+        return self.value
+
 parser = argparse.ArgumentParser(description='Downloads ocp release')
+parser.add_argument('product', type=Product, choices=list(Product))
 parser.add_argument('--ocpversion', help='ocp version example 4.10.10', type=str, required=True)
 parser.add_argument('--registryurl', help='example docker://registry-dev.example.com ', type=str, required=True)
 args = parser.parse_args()
@@ -46,7 +56,7 @@ Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_pa
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
 print("Current working directory: {0}".format(os.getcwd()))
-print('running oc-mirror to create mapping.txt')
+print('running oc-mirror to download')
 data = run([f'oc-mirror --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log'], shell=True, check=True)
 
 
