@@ -14,29 +14,35 @@ from common.utilities import Utilities
 load_dotenv()
 home = str(Path.home())
 WORKDIR = os.getenv('WORKDIR', default=home)
-
-
+print("Current working directory: {0}".format(os.getcwd()))
 
 parser = argparse.ArgumentParser(description='Downloads ocp release')
-parser.add_argument('--ocpversion', type=str, required=True)
-parser.add_argument('--registryurl', type=str, required=True)
+parser.add_argument('--ocpversion', description='ocp version example 4.10.10', type=str, required=True)
+parser.add_argument('--registryurl', description='example docker://registry-dev.example.com ', type=str, required=True)
 args = parser.parse_args()
 
 channel = args.ocpversion.rsplit('.', 1)[0]
 
 parameter_values_dict = {"<ocpchannel>" :channel, "<ocpversion>" :args.ocpversion}
 
-ocp4path = f'{WORKDIR}/download/ocp4'
-if not os.path.isdir(ocp4path):
-    shutil.rmtree(ocp4path)
-    os.makedirs(ocp4path)
+def make_downloadpath(product: str) -> str:
+    mypath = f'{WORKDIR}/download/{str}'
+    if not os.path.isdir(mypath):
+        shutil.rmtree(mypath)
+        os.makedirs(mypath)
+    return mypath
 
-Utilities.replaceInFile("templates/imageset-config-ocp4.yaml", f'{ocp4path}/imageset-config.yaml', parameter_values_dict)
-print(f'{ocp4path}/imageset-config.yaml')
+download_path = make_downloadpath("ocp4")
+iscfilename ="imageset-config-ocp4.yaml"
+Utilities.replaceInFile("templates/{iscfilename}", f'{download_path}/{iscfilename}', parameter_values_dict)
+print(f'Changing working directory to {download_path}')
+os.chdir(download_path)
+print("Current working directory: {0}".format(os.getcwd()))
 print('running oc-mirror')
-data = run(['oc-mirror', '--dry-run', '--config=./imageset-config.yaml', args.registryurl], capture_output=True, shell=True)
-print(data.stdout)
-print(data.stderr)
+data = run(['oc-mirror', '--dry-run', f'--config=./{iscfilename}', args.registryurl], capture_output=True, shell=True)
+print(f'stdout={data.stdout}')
+print(f'stderr={data.stderr}')
+
 
 #oc-mirror     docker://registry.swarchpoc.com
 
