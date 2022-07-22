@@ -32,16 +32,24 @@ def make_downloadpath(product: str) -> str:
         os.makedirs(mypath)
     return mypath
 
-download_path = make_downloadpath("ocp4")
+download_path = make_downloadpath("ocp4-dryrun")
 iscfilename ="imageset-config-ocp4.yaml"
 Utilities.replaceInFile(f'templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
 print("Current working directory: {0}".format(os.getcwd()))
-print('running oc-mirror')
-data = run(['oc-mirror', '--dry-run', f'--config=./{iscfilename}', args.registryurl], capture_output=True, shell=True, check=True, text=True)
-print(f'stdout={data.stdout}')
-print(f'stderr={data.stderr}')
+print('running oc-mirror with dryrun to create mapping.txt')
+data = run([f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log'], shell=True, check=True)
+
+# upload the mapping.txt to git
+
+download_path = make_downloadpath("ocp4")
+Utilities.replaceInFile(f'templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
+print(f'Changing working directory to {download_path}')
+os.chdir(download_path)
+print("Current working directory: {0}".format(os.getcwd()))
+print('running oc-mirror with dryrun to create mapping.txt')
+data = run([f'oc-mirror --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log'], shell=True, check=True)
 
 
 #oc-mirror     docker://registry.swarchpoc.com
