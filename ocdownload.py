@@ -24,7 +24,7 @@ class Product(Enum):
         return self.value
 
 parser = argparse.ArgumentParser(description='Downloads ocp release')
-parser.add_argument('product', type=Product, choices=list(Product))
+parser.add_argument('product', type=Product, choices=list(Product), required=True)
 parser.add_argument('--ocpversion', help='ocp version example 4.10.10', type=str, required=True)
 parser.add_argument('--registryurl', help='example docker://registry-dev.example.com ', type=str, required=True)
 args = parser.parse_args()
