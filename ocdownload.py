@@ -13,7 +13,7 @@ from common.utilities import Utilities
 
 load_dotenv()
 home = str(Path.home())
-script_path = os.path.realpath(__file__)
+script_path = Path(os.path.realpath(__file__)).parent
 
 WORKDIR = os.getenv('WORKDIR', default=home)
 print("Current working directory: {0}".format(os.getcwd()))
@@ -50,7 +50,7 @@ Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_pa
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
 print("Current working directory: {0}".format(os.getcwd()))
-print('running oc-mirror with dryrun to create mapping.txt')
+print('running oc-mirror to create mapping.txt')
 data = run([f'oc-mirror --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log'], shell=True, check=True)
 
 
