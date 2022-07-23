@@ -62,10 +62,15 @@ def make_downloadpath(folder: str) -> str:
         os.makedirs(mypath)
     return mypath
 
+
+def sortbydest(line) -> str:
+    line_fields = line.strip().split('=')
+    return line_fields[1]
+
 def createdSortedFile(source: str, dest: str) -> None:
     with open(source,'r') as first_file:
         rows = first_file.readlines()
-        rows.sort()
+        rows.sort(key=sortbydest)
         with open(dest,'w') as second_file:
             for row in rows:
                 second_file.write(row)
