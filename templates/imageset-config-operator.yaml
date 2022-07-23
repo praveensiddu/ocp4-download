@@ -5,11 +5,15 @@ apiVersion: mirror.openshift.io/v1alpha2
 kind: ImageSetConfiguration
 mirror:
   operators:
-    - catalog: registry.redhat.io/redhat/redhat-operator-index:v<ocpchannel>
+    # catalog example registry.redhat.io/redhat/redhat-operator-index:v4.10
+    - catalog: <catalog>
       #full: true
       packages:
+        # package name example odf-operator
         - name: <opname>
           channels:
-            - name: '<opchannel>'
+            # channels name example stable-4.10
+            - name: '<channel>'
+              #opversion example 4.10.5
               minVersion: '<opversion>'
               maxVersion: '<opversion>'
