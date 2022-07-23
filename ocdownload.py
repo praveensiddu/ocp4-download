@@ -24,10 +24,19 @@ class Product(Enum):
         return self.value
 
 parser = argparse.ArgumentParser(description='Downloads ocp release')
-parser.add_argument('product', type=Product, choices=list(Product), required=True)
-parser.add_argument('--ocpversion', help='ocp version example 4.10.10', type=str, required=True)
-parser.add_argument('--registryurl', help='example docker://registry-dev.example.com ', type=str, required=True)
+parser.add_argument('--product', help='ocp/operator', type=Product, choices=list(Product), required=True)
+parser.add_argument('--ocpversion', help='ex 4.10.10', type=str, required=True)
+parser.add_argument('--registryurl', help='ex: docker://registry-dev.example.com', type=str, required=True)
+parser.add_argument('--opname', help='examples: compliance-operator or odf-operator and so on', type=str, required=False)
+parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
 args = parser.parse_args()
+if args.product == Product.operator:
+    if args.opname == None:
+        print(f'parameter opname is required')
+        exit(1)
+    if args.opversion == None:
+        print(f'parameter opname is required')
+        exit(1)
 
 channel = args.ocpversion.rsplit('.', 1)[0]
 

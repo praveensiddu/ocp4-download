@@ -1,0 +1,15 @@
+---
+# this format works with oc-mirror 4.11 or higher
+# Schema for this file is here https://github.com/openshift/oc-mirror/blob/release-4.11/pkg/api/v1alpha1/config_types.go#L13
+apiVersion: mirror.openshift.io/v1alpha2
+kind: ImageSetConfiguration
+mirror:
+  operators:
+    - catalog: registry.redhat.io/redhat/redhat-operator-index:v<ocpchannel>
+      #full: true
+      packages:
+        - name: <opname>
+          channels:
+            - name: 'stable-<ocpchannel>'
+              minVersion: '<opversion>'
+              maxVersion: '<opversion>'
