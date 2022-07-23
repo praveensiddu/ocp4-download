@@ -8,7 +8,8 @@ python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://r
 ```
 # download an operator
 ```
-python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname odf-operator --opversion 4.9.6
+python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname compliance-operator --opversion 0.1.53 --opchannel release-0.1
+python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname odf-operator --opversion 4.9.6 --opchannel stable-4.9
 ```
 
 # Host prep steps
