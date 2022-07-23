@@ -30,6 +30,8 @@ parser.add_argument('--registryurl', help='ex: docker://registry-dev.example.com
 parser.add_argument('--opname', help='examples: compliance-operator or odf-operator and so on', type=str, required=False)
 parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
 args = parser.parse_args()
+
+
 if args.product == Product.operator:
     if args.opname == None:
         print('parameter opname is required when product is operator')
@@ -37,23 +39,30 @@ if args.product == Product.operator:
     if args.opversion == None:
         print('parameter opversion is required when product is operator')
         exit(1)
-else
+    component = args.opname
+    iscfilename = "imageset-config-operator.yaml"
+
+else:
     if args.opname != None or args.opversion != None:
         print('parameter opname and opversion must not be set when product is ocp')
         exit(1)
+    component = 'ocp4'
+    iscfilename = "imageset-config-ocp4.yaml"
 channel = args.ocpversion.rsplit('.', 1)[0]
 
 parameter_values_dict = {"<ocpchannel>" :channel, "<ocpversion>" :args.ocpversion}
 
-def make_downloadpath(product: str) -> str:
-    mypath = f'{WORKDIR}/download/{product}'
+def make_downloadpath(folder: str) -> str:
+    mypath = f'{WORKDIR}/download/{folder}'
     if not os.path.isdir(mypath):
         shutil.rmtree(mypath, ignore_errors=True)
         os.makedirs(mypath)
     return mypath
 
-download_path = make_downloadpath("ocp4-dryrun")
-iscfilename ="imageset-config-ocp4.yaml"
+
+
+download_path = make_downloadpath(f'{component}-dryrun')
+
 Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
@@ -63,7 +72,7 @@ data = run([f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > 
 
 # upload the mapping.txt to git
 
-download_path = make_downloadpath("ocp4")
+download_path = make_downloadpath(f'{component}-dryrun')
 Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
