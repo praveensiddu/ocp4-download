@@ -15,6 +15,7 @@ script_path = Path(os.path.realpath(__file__)).parent
 WORKDIR = os.getenv('WORKDIR', default=home)
 print("Current working directory: {0}".format(os.getcwd()))
 
+os.chdir(WORKDIR)
 
 class Product(Enum):
     ocp = 'ocp'
