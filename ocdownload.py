@@ -65,6 +65,7 @@ def make_downloadpath(folder: str) -> str:
 def createdSortedFile(source: str, dest: str) -> None:
     with open(source,'r') as first_file:
         rows = first_file.readlines()
+        rows.sort()
         with open(dest,'w') as second_file:
             for row in rows:
                 second_file.write(row)
