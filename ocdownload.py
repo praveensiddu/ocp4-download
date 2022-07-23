@@ -80,7 +80,7 @@ cmdargs = [f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > s
 print(f'run oc-mirror dryrun to create mapping.txt:\n{cmdargs}')
 data = run(cmdargs, shell=True, check=True)
 
-createdSortedFile('oc-mirror-workspace/mapping.txt', f'{component}-mapping.txt')
+createdSortedFile('oc-mirror-workspace/mapping.txt', f'{componentver}-mapping.txt')
 
 # upload the mapping.txt to git
 
