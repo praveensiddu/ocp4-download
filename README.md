@@ -34,6 +34,9 @@ yum install python39
 ln -s /usr/bin/python3 /usr/bin/python
 sudo dnf  install s3cmd
 sudo yum install git
+sudo yum install -y skopeo
+sudo chmod 777 /var/lib/containers/sigstore/
+ 
 ```
 ```
 sudo dnf install python3-pip

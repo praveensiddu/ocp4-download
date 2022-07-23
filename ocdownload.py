@@ -29,7 +29,7 @@ parser.add_argument('--ocpversion', help='ex 4.10.10', type=str, required=True)
 parser.add_argument('--registryurl', help='ex: docker://registry-dev.example.com', type=str, required=True)
 parser.add_argument('--opname', help='examples: compliance-operator or odf-operator and so on', type=str, required=False)
 parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
-parser.add_argument('--opchannel', help='ex: stable-4.9.6', type=str, required=False)
+parser.add_argument('--channel', help='ex: stable-4.9.6', type=str, required=False)
 
 args = parser.parse_args()
 
@@ -42,13 +42,13 @@ if args.product == Product.operator:
     if args.opversion == None:
         print('parameter opversion is required when product is operator')
         exit(1)
-    if args.opchannel == None:
-        print('parameter opchannel is required when product is operator')
+    if args.channel == None:
+        print('parameter channel is required when product is operator')
         exit(1)
     component = args.opname
     componentver = f'{args.opname}_{args.opversion}'
     iscfilename = "imageset-config-operator.yaml"
-    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion, "<opchannel>": args.opchannel }
+    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion, "<channel>": args.channel }
 
 else:
     if args.opname != None or args.opversion != None:
@@ -80,6 +80,15 @@ def createdSortedFile(source: str, dest: str) -> None:
             for row in rows:
                 second_file.write(row)
 
+if args.product == Product.operator:
+    cmdargs = [f'oc-mirror list operators --catalog=registry.redhat.io/redhat/redhat-operator-index:v{channel} --package={args.opname} --channel={channel} > stdout.log 2> stderr.log']
+    print(f'Checking if the operator exists:\n{cmdargs}')
+    data = run(cmdargs, shell=True, check=True)
+    with open(r"stdout.log", 'r') as fp:
+        lines = len(fp.readlines())
+        if lines <= 1:
+            print('operator not found. Please check your input: {cmdargs}')
+            exit(1)
 
 
 download_path = make_downloadpath(f'{component}-dryrun')
