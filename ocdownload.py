@@ -32,12 +32,15 @@ parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
 args = parser.parse_args()
 if args.product == Product.operator:
     if args.opname == None:
-        print(f'parameter opname is required')
+        print('parameter opname is required when product is operator')
         exit(1)
     if args.opversion == None:
-        print(f'parameter opversion is required')
+        print('parameter opversion is required when product is operator')
         exit(1)
-
+else
+    if args.opname != None or args.opversion != None:
+        print('parameter opname and opversion must not be set when product is ocp')
+        exit(1)
 channel = args.ocpversion.rsplit('.', 1)[0]
 
 parameter_values_dict = {"<ocpchannel>" :channel, "<ocpversion>" :args.ocpversion}
