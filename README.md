@@ -4,7 +4,7 @@ python oc-mirror-download.py --ocpversion 4.10.10
 ```
 # download ocp
 ```
-python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com 
+python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com
 ```
 # download an operator
 ```

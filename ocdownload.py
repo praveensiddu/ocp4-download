@@ -69,7 +69,7 @@ print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
 print("Current working directory: {0}".format(os.getcwd()))
 cmdargs = [f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log']
-print(f'dryrun to create mapping.txt: {cmdargs}')
+print(f'run oc-mirror dryrun to create mapping.txt:\n{cmdargs}')
 data = run(cmdargs, shell=True, check=True)
 
 # upload the mapping.txt to git
@@ -79,8 +79,8 @@ Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_pa
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
 print("Current working directory: {0}".format(os.getcwd()))
-print(f'oc-mirror to download: {cmdargs}')
 cmdargs = [f'oc-mirror --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log']
+print(f'run oc-mirror to download:\n{cmdargs}')
 data = run(cmdargs, shell=True, check=True)
 
 #oc-mirror     docker://registry.swarchpoc.com
