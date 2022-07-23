@@ -2,12 +2,11 @@
 ``` 
 python oc-mirror-download.py --ocpversion 4.10.10
 ```
-# download ocp or an operator
-## download ocp
+# download ocp
 ```
 python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com 
 ```
-## download an operator
+# download an operator
 ```
 python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname odf-operator --opversion 4.9.6
 ```
