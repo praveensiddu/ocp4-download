@@ -35,7 +35,7 @@ if args.product == Product.operator:
         print(f'parameter opname is required')
         exit(1)
     if args.opversion == None:
-        print(f'parameter opname is required')
+        print(f'parameter opversion is required')
         exit(1)
 
 channel = args.ocpversion.rsplit('.', 1)[0]
