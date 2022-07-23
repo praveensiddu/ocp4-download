@@ -1,4 +1,16 @@
-# ocp4-download
+# download oc-mirror
+``` 
+python oc-mirror-download.py --ocpversion 4.10.10
+```
+# download ocp or an operator
+## download ocp
+```
+python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com 
+```
+## download an operator
+```
+python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname odf-operator --opversion 4.9.6
+```
 
 # Host prep steps
 
@@ -28,17 +40,3 @@ sudo dnf install python3-pip
 sudo pip3 install python-dotenv
 ```
 
-1. download oc-mirror
-``` 
-python oc-mirror-download.py --ocpversion 4.10.10
-```
-
-1. download ocp or an operator
-to download ocp
-```
-python ocdownload.py --product ocp --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com 
-```
-to download an operator
-```
-python ocdownload.py --product operator --ocpversion 4.10.10 --registryurl docker://registry.swarchpoc.com  --opname odf-operator --opversion 4.9.6
-```
