@@ -29,6 +29,8 @@ parser.add_argument('--ocpversion', help='ex 4.10.10', type=str, required=True)
 parser.add_argument('--registryurl', help='ex: docker://registry-dev.example.com', type=str, required=True)
 parser.add_argument('--opname', help='examples: compliance-operator or odf-operator and so on', type=str, required=False)
 parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
+parser.add_argument('--opchannel', help='ex: stable-4.9.6', type=str, required=False)
+
 args = parser.parse_args()
 
 channel = args.ocpversion.rsplit('.', 1)[0]
@@ -40,10 +42,13 @@ if args.product == Product.operator:
     if args.opversion == None:
         print('parameter opversion is required when product is operator')
         exit(1)
+    if args.opchannel == None:
+        print('parameter opchannel is required when product is operator')
+        exit(1)
     component = args.opname
     componentver = f'{args.opname}_{args.opversion}'
     iscfilename = "imageset-config-operator.yaml"
-    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion}
+    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion, "<opchannel>": args.opchannel }
 
 else:
     if args.opname != None or args.opversion != None:
@@ -89,7 +94,7 @@ data = run(cmdargs, shell=True, check=True)
 
 createdSortedFile('oc-mirror-workspace/mapping.txt', f'{componentver}-mapping.txt')
 
-# upload the mapping.txt to git
+# upload the f'{componentver}-mapping.txt' to git
 
 download_path = make_downloadpath(f'{component}')
 Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)

@@ -10,6 +10,6 @@ mirror:
       packages:
         - name: <opname>
           channels:
-            - name: 'stable-<ocpchannel>'
+            - name: '<opchannel>'
               minVersion: '<opversion>'
               maxVersion: '<opversion>'
