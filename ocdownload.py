@@ -41,6 +41,7 @@ if args.product == Product.operator:
         print('parameter opversion is required when product is operator')
         exit(1)
     component = args.opname
+    componentver = f'{args.opname}_{args.opversion}'
     iscfilename = "imageset-config-operator.yaml"
     parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion}
 
@@ -49,6 +50,7 @@ else:
         print('parameter opname and opversion must not be set when product is ocp')
         exit(1)
     component = 'ocp4'
+    componentver = f'ocp4_{args.ocpversion}'
     iscfilename = "imageset-config-ocp4.yaml"
     parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion}
 
@@ -60,7 +62,13 @@ def make_downloadpath(folder: str) -> str:
         os.makedirs(mypath)
     return mypath
 
-
+def createdSortedFile(source: str, dest: str) -> None:
+    with open(source,'r') as first_file:
+        rows = first_file.readlines()
+        sorted_rows = sorted(rows, key=lambda x: int(x.split()[0]), reverse=False)
+        with open(dest,'w') as second_file:
+            for row in sorted_rows:
+                second_file.write(row)
 
 download_path = make_downloadpath(f'{component}-dryrun')
 
@@ -71,6 +79,8 @@ print("Current working directory: {0}".format(os.getcwd()))
 cmdargs = [f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > stdout.log 2> stderr.log']
 print(f'run oc-mirror dryrun to create mapping.txt:\n{cmdargs}')
 data = run(cmdargs, shell=True, check=True)
+
+createdSortedFile('oc-mirror-workspace/mapping.txt', f'{component}-mapping.txt')
 
 # upload the mapping.txt to git
 
