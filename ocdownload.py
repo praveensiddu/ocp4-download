@@ -84,7 +84,7 @@ def createdSortedFile(source: str, dest: str) -> None:
                 second_file.write(row)
 
 if args.product == Product.operator:
-    cmdargs = [f'oc-mirror list operators --catalog=registry.redhat.io/redhat/redhat-operator-index:v{channel} --package={args.opname} --channel={channel} > stdout.log 2> stderr.log']
+    cmdargs = [f'oc-mirror list operators --catalog=registry.redhat.io/redhat/redhat-operator-index:v{channel} --package={args.opname} --channel={args.channel} > stdout.log 2> stderr.log']
     print(f'Checking if the operator exists:\n{cmdargs}')
     data = run(cmdargs, shell=True, check=True)
     with open(r"stdout.log", 'r') as fp:
