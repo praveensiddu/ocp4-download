@@ -65,10 +65,12 @@ def make_downloadpath(folder: str) -> str:
 def createdSortedFile(source: str, dest: str) -> None:
     with open(source,'r') as first_file:
         rows = first_file.readlines()
-        sorted_rows = sorted(rows, key=lambda x: int(x.split()[0]), reverse=False)
+        sorted_rows = rows.sort()
         with open(dest,'w') as second_file:
             for row in sorted_rows:
                 second_file.write(row)
+
+
 
 download_path = make_downloadpath(f'{component}-dryrun')
 
