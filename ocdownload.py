@@ -74,7 +74,7 @@ data = run(cmdargs, shell=True, check=True)
 
 # upload the mapping.txt to git
 
-download_path = make_downloadpath(f'{component}-dryrun')
+download_path = make_downloadpath(f'{component}')
 Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
 print(f'Changing working directory to {download_path}')
 os.chdir(download_path)
