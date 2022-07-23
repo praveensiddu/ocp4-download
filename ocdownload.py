@@ -31,6 +31,7 @@ parser.add_argument('--opname', help='examples: compliance-operator or odf-opera
 parser.add_argument('--opversion', help='ex: 4.9.6', type=str, required=False)
 args = parser.parse_args()
 
+channel = args.ocpversion.rsplit('.', 1)[0]
 
 if args.product == Product.operator:
     if args.opname == None:
@@ -41,6 +42,7 @@ if args.product == Product.operator:
         exit(1)
     component = args.opname
     iscfilename = "imageset-config-operator.yaml"
+    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion}
 
 else:
     if args.opname != None or args.opversion != None:
@@ -48,9 +50,8 @@ else:
         exit(1)
     component = 'ocp4'
     iscfilename = "imageset-config-ocp4.yaml"
-channel = args.ocpversion.rsplit('.', 1)[0]
+    parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion}
 
-parameter_values_dict = {"<ocpchannel>" :channel, "<ocpversion>" :args.ocpversion}
 
 def make_downloadpath(folder: str) -> str:
     mypath = f'{WORKDIR}/download/{folder}'
