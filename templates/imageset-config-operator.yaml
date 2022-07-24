@@ -6,7 +6,7 @@ kind: ImageSetConfiguration
 mirror:
   operators:
     # catalog example registry.redhat.io/redhat/redhat-operator-index:v4.10
-    - catalog: <catalog>
+    - catalog: <catalogindex>
       #full: true
       packages:
         # package name example odf-operator
@@ -14,6 +14,6 @@ mirror:
           channels:
             # channels name example stable-4.10
             - name: '<channel>'
-              #opversion example 4.10.5
+              #operator version example 4.10.5
               minVersion: '<opversion>'
               maxVersion: '<opversion>'
