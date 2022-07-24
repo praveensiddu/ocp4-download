@@ -50,7 +50,7 @@ if args.product == Product.operator:
     componentver = f'{args.opname}_{args.opversion}'
     iscfilename = "imageset-config-operator.yaml"
 
-    catalogindex = 'registry.redhat.io/redhat/redhat-operator-index:v{args.channel}'
+    catalogindex = f'registry.redhat.io/redhat/redhat-operator-index:v{args.channel}'
     parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion, "<opname>": args.opname, "<opversion>": args.opversion, "<channel>": args.channel, "catalogindex": catalogindex}
 
 else:
