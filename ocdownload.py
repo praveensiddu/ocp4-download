@@ -47,7 +47,7 @@ if args.product == Product.operator:
         print('parameter channel is required when product is operator')
         exit(1)
     component = args.opname
-    componentver = f'{args.opname}_{args.opversion}'
+    component_ver = f'{args.opname}_{args.opversion}'
     iscfilename = "imageset-config-operator.yaml"
 
     catalogindex = f'registry.redhat.io/redhat/redhat-operator-index:v{channel}'
@@ -58,7 +58,7 @@ else:
         print('parameter opname and opversion must not be set when product is ocp')
         exit(1)
     component = 'ocp4'
-    componentver = f'ocp4_{args.ocpversion}'
+    component_ver = f'ocp4_{args.ocpversion}'
     iscfilename = "imageset-config-ocp4.yaml"
     parameter_values_dict = {"<ocpchannel>": channel, "<ocpversion>": args.ocpversion}
 
@@ -104,9 +104,9 @@ cmdargs = [f'oc-mirror --dry-run --config=./{iscfilename} {args.registryurl} > s
 print(f'run oc-mirror dryrun to create mapping.txt:\n{cmdargs}')
 data = run(cmdargs, shell=True, check=True)
 
-createdSortedFile('oc-mirror-workspace/mapping.txt', f'{componentver}-mapping.txt')
+createdSortedFile('oc-mirror-workspace/mapping.txt', f'{component_ver}_mapping.txt')
 
-# upload the f'{componentver}-mapping.txt' to git
+# upload the f'{component_ver}_mapping.txt' to git
 
 download_path = make_downloadpath(f'{component}')
 Utilities.replaceInFile(f'{script_path}/templates/{iscfilename}', f'{download_path}/{iscfilename}', parameter_values_dict)
